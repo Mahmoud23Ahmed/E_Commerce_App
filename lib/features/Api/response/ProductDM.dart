@@ -73,11 +73,13 @@ class ProductDM {
     quantity = json['quantity'];
     price = json['price'] ?? 0.0;
     imageCover = json['imageCover'] ?? '';
-    category = json['category'] != null ? categoryDM.fromJson(json['category']) : null;
+    category =
+        json['category'] != null ? categoryDM.fromJson(json['category']) : null;
     brand = json['brand'] != null ? categoryDM.fromJson(json['brand']) : null;
     ratingsAverage = json['ratingsAverage'] ?? 0.0;
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     id = json['id'];
     print('Parsed Data: $this');
-  }}
+  }
+}

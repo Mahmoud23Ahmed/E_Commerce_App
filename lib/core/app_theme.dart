@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final primaryColor = Color(0xff8B63FF);
+final primaryColor = Color(0xff035696);
 final secondaryColor = Color(0xffc8e6c9);
 
 final appTheme = ThemeData(
@@ -18,7 +18,7 @@ final appTheme = ThemeData(
     displayLarge: const TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
-      color: Colors.purple,
+      color: Color(0xff035696),
     ),
     bodyLarge: TextStyle(
       fontSize: 20.0,
@@ -49,11 +49,11 @@ final appTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
-      backgroundColor: Colors.purple,
+      backgroundColor: Color(0xff035696),
     ),
   ),
   buttonTheme: ButtonThemeData(
-    buttonColor: Colors.purple,
+    buttonColor: Color(0xff035696),
     textTheme: ButtonTextTheme.primary,
   ),
 );

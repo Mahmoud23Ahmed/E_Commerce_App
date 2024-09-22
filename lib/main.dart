@@ -19,25 +19,30 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await AuthenticationRemoteDsImpl(networkInfo: NetworkInfoImpl(connectionChecker: InternetConnectionChecker())).signOut();
- // await AuthenticationImp().signIn("nada@gmail.com", "123456789");
-  runApp(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider(
-              create: (_) => AuthBloc(
-                  usersDBModel: UsersRemoteDsImp(),
-                  authenticationRemoteDs: AuthenticationRemoteDsImpl(networkInfo: NetworkInfoImpl(connectionChecker: InternetConnectionChecker())), networkInfo: NetworkInfoImpl(connectionChecker: InternetConnectionChecker()))
-          ),
-                 
-          BlocProvider(
-              create: (_) => UserBloc(
-                  usersDBModel: UsersRemoteDsImp(),
-                  authinticationRemoteDs: AuthenticationRemoteDsImpl(networkInfo: NetworkInfoImpl(connectionChecker: InternetConnectionChecker())))),
-        ],
-        child: MyApp(),
-      )
-  );
+  await AuthenticationRemoteDsImpl(
+          networkInfo:
+              NetworkInfoImpl(connectionChecker: InternetConnectionChecker()))
+      .signOut();
+  // await AuthenticationImp().signIn("nada@gmail.com", "123456789");
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+          create: (_) => AuthBloc(
+              usersDBModel: UsersRemoteDsImp(),
+              authenticationRemoteDs: AuthenticationRemoteDsImpl(
+                  networkInfo: NetworkInfoImpl(
+                      connectionChecker: InternetConnectionChecker())),
+              networkInfo: NetworkInfoImpl(
+                  connectionChecker: InternetConnectionChecker()))),
+      BlocProvider(
+          create: (_) => UserBloc(
+              usersDBModel: UsersRemoteDsImp(),
+              authinticationRemoteDs: AuthenticationRemoteDsImpl(
+                  networkInfo: NetworkInfoImpl(
+                      connectionChecker: InternetConnectionChecker())))),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -46,15 +51,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Home()
-      //LoginPage()
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen());
   }
 }
-

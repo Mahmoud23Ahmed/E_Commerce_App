@@ -18,15 +18,16 @@ class UserModel {
   });
 
   Map<String, dynamic> toMap() => {
-    'name': name,
-    'userId': userId,
-    'email': email,
-    'phone': phone,
-    'address': address,
-    'age': age,
-  };
+        'name': name,
+        'userId': userId,
+        'email': email,
+        'phone': phone,
+        'address': address,
+        'age': age,
+      };
 
-  factory UserModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc) {
+  factory UserModel.fromDocumentSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> doc) {
     print('${doc.id} from testing docId');
     return UserModel(
       name: doc.data()?['name'] ?? '',

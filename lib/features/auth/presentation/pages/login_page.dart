@@ -10,9 +10,6 @@ import '../../data/model/auth_model.dart';
 import '../bloc/auth_bloc/authentication_bloc.dart';
 import '../bloc/user_data_bloc/user_data_bloc.dart';
 
-
-
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -26,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   var password = TextEditingController();
 
   GlobalKey<FormState> keyLogin = GlobalKey();
-   bool  flag = false ;
+  bool flag = false;
 
   @override
   void initState() {
@@ -41,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (BuildContext context, AuthState state) {
-          if (state is UserAuthorizedState ) {
+          if (state is UserAuthorizedState) {
             context.read<UserBloc>().add(GetUserEvent());
             Navigator.pushReplacement(
                 context,
@@ -58,173 +55,168 @@ class _LoginPageState extends State<LoginPage> {
             return const Center(child: CircularProgressIndicator());
           }
 
-            return Center(
-              child: Form(
-                key: keyLogin,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: SvgPicture.asset(
-                              'assets/images/login.svg',
-                              width: 200.0,
-                              height: 200.0,
+          return Center(
+            child: Form(
+              key: keyLogin,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: SvgPicture.asset(
+                            'assets/images/login.svg',
+                            width: 200.0,
+                            height: 200.0,
+                          ),
+                        ),
+                        const Text(
+                          'Login',
+                          style: TextStyle(
+                              fontSize: 40.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'MyFont'),
+                        ),
+                        const SizedBox(
+                          height: 40.0,
+                        ),
+                        TextFormField(
+                          controller: email,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            labelText: 'Email',
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(
+                              Icons.email,
                             ),
                           ),
-                          const Text(
-                            'Login',
-                            style: TextStyle(
-                                fontSize: 40.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'MyFont'),
-                          ),
-                          const SizedBox(
-                            height: 40.0,
-                          ),
-                          TextFormField(
-                            controller: email,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(
-                                Icons.email,
-                              ),
+                          validator: (text) {
+                            if (text!.isEmpty) {
+                              return 'field can not be null';
+                            }
+                            if (text.length < 6 ||
+                                !text.contains('@') ||
+                                !text.endsWith('.com') ||
+                                text.startsWith('@')) {
+                              return 'Wrong data ';
+                            } else
+                              return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 15.0,
+                        ),
+                        TextFormField(
+                          controller: password,
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: !flag,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: const OutlineInputBorder(),
+                            prefixIcon: const Icon(
+                              Icons.lock,
                             ),
-                            validator: (text) {
-                              if (text!.isEmpty) {
-                                return 'field can not be null';
-                              }
-                              if (text.length < 6 ||
-                                  !text.contains('@') ||
-                                  !text.endsWith('.com') ||
-                                  text.startsWith('@')) {
-                                return 'Wrong data ';
-                              } else
-                                return null;
-                            },
-                          ),
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          TextFormField(
-                            controller: password,
-                            keyboardType: TextInputType.emailAddress,
-                            obscureText: !flag,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              border: const OutlineInputBorder(),
-                              prefixIcon: const Icon(
-                                Icons.lock,
-                              ),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    flag = !flag;
-                                  });
-                                },
-                                icon: Icon(
-                                  flag
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                ),
-                              ),
-                            ),
-
-                            validator: (text) {
-                              if (text!.isEmpty) {
-                                return 'field can not be null';
-                              }
-                              if (text.length < 8) {
-                                return 'password must be strong';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          const SizedBox(
-                            height: 35.0,
-                          ),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                colors: [primaryColor, secondaryColor],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                            ),
-                            child: MaterialButton(
+                            suffixIcon: IconButton(
                               onPressed: () {
-                                if (keyLogin.currentState!.validate()) {
-                                  AuthModel userModel = AuthModel(
-                                      password: password.text, email: email.text);
-                                  context
-                                      .read<AuthBloc>()
-                                      .add(SignIn(userModel: userModel));
-                                }
-
+                                setState(() {
+                                  flag = !flag;
+                                });
                               },
-                              child: const Text(
-                                'Login',
-                                style:
-                                TextStyle(color: Colors.white, fontSize: 24),
+                              icon: Icon(
+                                flag ? Icons.visibility : Icons.visibility_off,
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          Center(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Don\'t have an account?',
-                                    style:
-                                    TextStyle(fontSize: 18, fontFamily: 'MyFont'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => SignUpPage()));
-                                    },
-                                    child: Text('Register now ',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            color: primaryColor,
-                                            fontFamily: 'MyFont')),
-                                  )
-                                ],
-                              ),
+                          validator: (text) {
+                            if (text!.isEmpty) {
+                              return 'field can not be null';
+                            }
+                            if (text.length < 8) {
+                              return 'password must be strong';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        const SizedBox(
+                          height: 35.0,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              colors: [primaryColor, secondaryColor],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
                           ),
-                          const SizedBox(
-                            height: 10.0,
+                          child: MaterialButton(
+                            onPressed: () {
+                              if (keyLogin.currentState!.validate()) {
+                                AuthModel userModel = AuthModel(
+                                    password: password.text, email: email.text);
+                                context
+                                    .read<AuthBloc>()
+                                    .add(SignIn(userModel: userModel));
+                              }
+                            },
+                            child: const Text(
+                              'Login',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 24),
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        Center(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Don\'t have an account?',
+                                  style: TextStyle(
+                                      fontSize: 15, fontFamily: 'MyFont'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => SignUpPage()));
+                                  },
+                                  child: Text('Register now ',
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          color: primaryColor,
+                                          fontFamily: 'MyFont')),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-            );
-
+            ),
+          );
         },
       ),
     );
   }
 }
+
 void showToast(String message) {
   Fluttertoast.showToast(
     msg: message,
@@ -236,5 +228,3 @@ void showToast(String message) {
     fontSize: 16.0,
   );
 }
-
-
