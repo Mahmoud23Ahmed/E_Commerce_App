@@ -5,12 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../../core/widgets/toast.dart';
+
 class ProductDetails extends StatefulWidget {
   final ProductDM product;
+  final int? counter;
 
   const ProductDetails({
     super.key,
     required this.product,
+    this.counter,
   });
 
   @override
@@ -22,10 +26,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   num _totalPrice = 0.0;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  late final CollectionReference _cartItemsCollection = _firestore
-      .collection('users')
-      .doc('currentUserUid')
-      .collection('cartItems');
 
   void _incrementCounter() {
     setState(() {
@@ -45,8 +45,9 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   void initState() {
-    super.initState();
     _totalPrice = widget.product.price ?? 0;
+    _counter = widget.counter ?? 1;
+    super.initState();
   }
 
   @override
@@ -66,25 +67,25 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
         title: const Text('Product Details'),
         centerTitle: true,
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CartPage(),
-                ),
-              );
-            },
-            child: const Icon(
-              Icons.shopping_cart,
-              size: 25,
-            ),
-          ),
-          const SizedBox(
-            width: 30,
-          )
-        ],
+        // actions: [
+        //   GestureDetector(
+        //     onTap: () {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (context) => CartPage(),
+        //         ),
+        //       );
+        //     },
+        //     child: const Icon(
+        //       Icons.shopping_cart,
+        //       size: 25,
+        //     ),
+        //   ),
+        //   const SizedBox(
+        //     width: 30,
+        //   )
+        // ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -244,34 +245,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             .get();
 
                                     if (querySnapshot.docs.isNotEmpty) {
-                                      Fluttertoast.showToast(
-                                        msg: "Product already exists in cart",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor:
-                                            const Color(0xff035696),
-                                        textColor: Colors.white,
-                                        fontSize: 15.0,
-                                      );
+                                      showToast(
+                                          "Product already exists in cart");
                                     } else {
                                       await cartItemsCollection.add({
                                         'productId': widget.product.id,
                                         'title': widget.product.title,
                                         'price': widget.product.price,
                                         'quantity': _counter,
+                                        'image': widget.product.images!.first,
+                                        'sold': widget.product.sold,
+                                        'description':
+                                            widget.product.description,
+                                        'ratingsAverage':
+                                            widget.product.ratingsAverage
                                       });
 
-                                      Fluttertoast.showToast(
-                                        msg: "Product Added to Cart",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor:
-                                            const Color(0xff035696),
-                                        textColor: Colors.white,
-                                        fontSize: 15.0,
-                                      );
+                                      showToast("Product Added to Cart");
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(

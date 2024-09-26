@@ -182,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                                 const Text(
                                   'Don\'t have an account?',
                                   style: TextStyle(
-                                      fontSize: 15, fontFamily: 'MyFont'),
+                                      fontSize: 18, fontFamily: 'MyFont'),
                                 ),
                                 TextButton(
                                   onPressed: () {
@@ -193,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                   child: Text('Register now ',
                                       style: TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 18,
                                           color: primaryColor,
                                           fontFamily: 'MyFont')),
                                 )

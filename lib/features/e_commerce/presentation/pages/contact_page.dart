@@ -31,12 +31,11 @@ class _ContactPageState extends State<ContactPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            "Contact Information",
-            style: appTheme.textTheme.displayLarge,
-          ),
+        title: Text(
+          "Contact Information",
+          style: appTheme.textTheme.displayLarge,
         ),
+        centerTitle: true,
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) {

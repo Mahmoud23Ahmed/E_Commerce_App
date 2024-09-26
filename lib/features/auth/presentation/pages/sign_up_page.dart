@@ -212,10 +212,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                       MaterialPageRoute(
                                           builder: (_) => const LoginPage()));
                                 },
-                                child: const Text('Login now ',
+                                child: Text('Login now ',
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Color(0xff6C63FF),
+                                      color: primaryColor,
                                     )),
                               )
                             ],
