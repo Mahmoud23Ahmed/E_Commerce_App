@@ -117,28 +117,35 @@ class CartPage extends StatelessWidget {
                       style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(height: 20),
-                    Container(
-                      height: screenHeight * 0.05,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff035696),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Check Out ',
-                            style: TextStyle(
-                              fontSize: screenWidth * 0.035,
+                    GestureDetector(
+                      onTap: () {
+                        BlocProvider.of<CartBloc>(context)
+                            .add(DeleteAllCartItems());
+                        showToast("Tahnks, Products will be delivered to you.");
+                      },
+                      child: Container(
+                        height: screenHeight * 0.05,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff035696),
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Check Out ',
+                              style: TextStyle(
+                                fontSize: screenWidth * 0.035,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const Icon(
+                              Icons.arrow_right_alt,
+                              size: 20,
                               color: Colors.white,
                             ),
-                          ),
-                          const Icon(
-                            Icons.arrow_right_alt,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

@@ -15,6 +15,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartLoading()) {
     on<LoadCartItems>(_onLoadCartItems);
     on<DeleteCartItem>(_onDeleteCartItem);
+    on<DeleteAllCartItems>(_onDeleteAllCartItems);
     _getCurrentUserId();
   }
 
@@ -61,6 +62,43 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         add(LoadCartItems()); // Reload cart after deleting
       } catch (e) {
         emit(CartError('Failed to delete item.'));
+      }
+    } else {
+      emit(CartError('User not authenticated.'));
+    }
+  }
+
+  Future<void> _onDeleteAllCartItems(
+    DeleteAllCartItems event,
+    Emitter<CartState> emit,
+  ) async {
+    if (_userId != null) {
+      print('User ID: $_userId'); // Print out the user ID
+      try {
+        QuerySnapshot snapshot = await _firestore
+            .collection('users')
+            .doc(_userId)
+            .collection('cartItems')
+            .get();
+
+        print(
+            'Snapshot Docs: ${snapshot.docs.length}'); // Print out the number of documents in the snapshot
+
+        for (DocumentSnapshot doc in snapshot.docs) {
+          print(
+              'Deleting document: ${doc.id}'); // Print out the ID of each document being deleted
+          await _firestore
+              .collection('users')
+              .doc(_userId)
+              .collection('cartItems')
+              .doc(doc.id)
+              .delete();
+        }
+        add(LoadCartItems()); // Reload cart after deleting
+      } catch (e) {
+        print(
+            'Error deleting cart items: $e'); // Print out any errors that occur
+        emit(CartError('Failed to delete items.'));
       }
     } else {
       emit(CartError('User not authenticated.'));

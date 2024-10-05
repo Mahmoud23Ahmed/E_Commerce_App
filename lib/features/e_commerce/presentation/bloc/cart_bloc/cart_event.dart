@@ -16,3 +16,8 @@ class DeleteCartItem extends CartEvent {
   List<Object?> get props => [itemId];
 }
 
+class DeleteAllCartItems extends CartEvent {
+  DeleteAllCartItems();
+  @override
+  List<Object?> get props => [];
+}
