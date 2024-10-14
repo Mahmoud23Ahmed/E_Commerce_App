@@ -67,11 +67,11 @@ class _ProductDetailsState extends State<ProductDetails> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
+          padding: EdgeInsets.all(screenWidth * 0.04),
           child: Column(
             children: [
               SizedBox(
-                height: screenHeight * 0.25, // Adjust image height dynamically
+                height: screenHeight * 0.25,
                 child: Image.network(
                   widget.product.images!.first,
                   fit: BoxFit.cover,
@@ -90,8 +90,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: Text(
                             widget.product.title.toString(),
                             style: TextStyle(
-                              fontSize:
-                                  screenWidth * 0.05, // Responsive font size
+                              fontSize: screenWidth * 0.05,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -99,14 +98,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Text(
                           '\$${widget.product.price}',
                           style: TextStyle(
-                            fontSize:
-                                screenWidth * 0.05, // Responsive font size
+                            fontSize: screenWidth * 0.05,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: screenHeight * 0.02), // Responsive space
+                    SizedBox(height: screenHeight * 0.02),
                     Row(
                       children: [
                         Container(
@@ -132,7 +130,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ],
                     ),
-                    SizedBox(height: screenHeight * 0.04), // Responsive space
+                    SizedBox(height: screenHeight * 0.04),
                     const Text(
                       'Description',
                       style: TextStyle(
@@ -140,7 +138,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: screenHeight * 0.01), // Responsive space
+                    SizedBox(height: screenHeight * 0.01),
                     Text(
                       widget.product.description.toString(),
                       style: TextStyle(fontSize: screenWidth * 0.04),

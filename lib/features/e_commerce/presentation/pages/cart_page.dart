@@ -136,10 +136,14 @@ class CartPage extends StatelessWidget {
                         SizedBox(height: screenHeight * 0.02),
                         GestureDetector(
                           onTap: () {
-                            BlocProvider.of<CartBloc>(context)
-                                .add(DeleteAllCartItems());
-                            showToast(
-                                "Thanks, Products will be delivered to you.");
+                            if (state.cartItems.isEmpty) {
+                              showToast("There is no items in your cart.");
+                            } else {
+                              BlocProvider.of<CartBloc>(context)
+                                  .add(DeleteAllCartItems());
+                              showToast(
+                                  "Thanks, Products will be delivered to you.");
+                            }
                           },
                           child: Container(
                             height: screenHeight * 0.06,

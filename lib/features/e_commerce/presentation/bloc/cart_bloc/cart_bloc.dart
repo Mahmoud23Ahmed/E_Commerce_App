@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 part 'cart_event.dart';
 part 'cart_state.dart';
 
-// Cart Bloc
 class CartBloc extends Bloc<CartEvent, CartState> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
